@@ -1,0 +1,386 @@
+@import "./base.css";
+
+.main_nav a {
+  text-decoration: none;
+  color: #205a91;
+  padding: 18px;
+
+  border-radius: 20px;
+  background-image: linear-gradient(
+    to right,
+    #60cfcf,
+    #0097b3
+  ); /* Параметры градиента */
+  background-repeat: no-repeat; /* Фон не повторяется */
+  background-size: 0% 100%; /* Градиент пока не показываем */
+  transition: 0.3s; /* Время перехода */
+}
+
+a:hover {
+  background-size: 100% 100%;
+}
+/*------------Таблица контрольных точек во вкладке пациент-----------*/
+
+.table_design {
+  width: 100%;
+  border: none;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+.table_design thead th {
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  padding: 10px 15px;
+  background: #0097b3;
+
+  font-size: 20px;
+  color: #aedede;
+}
+.table_design thead tr th:first-child {
+  background-image: linear-gradient(
+    to right,
+    #60cfcf,
+    #0097b3
+  ); /* Параметры градиента */
+  border-radius: 8px 0 0 8px;
+}
+.table_design thead tr th:last-child {
+  border-radius: 0 8px 8px 0;
+  background-image: linear-gradient(to right, #0097b3, #60cfcf);
+}
+
+.table_design tbody td {
+  text-align: center;
+  border: none;
+  padding: 10px 15px;
+  font-size: 20px;
+  vertical-align: top;
+  color: #205a91;
+}
+.table_design tbody tr td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.table_design tbody tr td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.table_design tr:nth-child(2n) {
+  background: #df7f73;
+}
+
+/*Контейнеры для таблиц с кнопкой +*/
+.div-for-table-design {
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: #67cee71f;
+  border: #205a91;
+  border-radius: 8px 8px 8px 8px;
+}
+
+.div-for-table-design .add,
+.add-without-div {
+  margin-top: 10px;
+  margin-left: 20px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #1797b1;
+  border: 8px solid #1797b1;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  height: 40px;
+  width: 50px;
+  transition: all 0.3s;
+}
+.div-for-table-design .add:hover,
+.add-without-div:hover {
+  background-color: #29b4d0;
+  border-color: #29b4d0;
+}
+
+
+/*--------------------Кнопки редактирования и удаления в таблице---------------------*/
+
+.update_button_design {
+  background-image: url("@/assets/pencil3.png");
+}
+.delete_button_design {
+  background-image: url("@/assets/trash2.png");
+}
+
+/*--------------------Таблица другая---------------------*/
+.strict-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+
+  thead {
+    background-color: #3498db;
+    color: white;
+
+    th {
+      padding: 12px 15px;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #dddddd;
+      transition: background-color 0.2s;
+
+      &:nth-child(even) {
+        background-color: #21476d;
+      }
+
+      td {
+        padding: 12px 15px;
+      }
+    }
+  }
+}
+/*----------------------Кнопки сохранить и отменить----------------------------*/
+
+.agree_button,
+.cancel_button {
+  
+  text-align: center;
+  font-size: 18px;
+  background-color: #1797b1;
+  border: solid #1797b1;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 36px;
+  width: 40px;
+  transition: all 0.3s;
+}
+
+.agree_button:hover {
+  background-color: #197b3dc7;
+  border: #197b3dc7;
+}
+
+.cancel_button:hover {
+  background-color: #8f2d26c7;
+  border: #8f2d26c7;
+}
+
+/*------------Авторизация-----------*/
+.authorization_form {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.authorization_form input {
+  border: 2px solid #205a91;
+  border-radius: 5px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.111);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.authorization_form input:focus {
+  border: 3px solid #555;
+}
+.authorization_form label {
+  font-size: 20px;
+  padding: 18px;
+  margin-left: 100px;
+  margin-top: 10px;
+  color: #205a91;
+}
+.auth_button {
+  display: flex;
+  justify-content: center;
+}
+.auth_button button {
+  margin-top: 10px;
+  margin-left: 10px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #1797b1;
+  border: 2px solid #1797b1;
+  border-radius: 100px;
+  color: #fff;
+  cursor: pointer;
+  height: 50px;
+  line-height: 48px;
+  outline: none;
+  padding: 0 30px 0 25px;
+  transition: all 0.3s;
+}
+.auth_button button:hover {
+  background-color: #29b4d0;
+  border-color: #29b4d0;
+}
+
+/*модалка добавления*/
+.modal-add {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #47bcea;
+  border-radius: 8px 8px 8px 8px;
+  display: flex;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(49, 60, 63, 0.518);
+}
+.modal-add input,
+.modal-add select,
+.modal-add textarea {
+  width: 100%;
+  padding: 8px;
+  background-color: rgba(34, 33, 33, 0.29);
+  border: 2px solid rgba(185, 176, 176, 0.642);
+  border-radius: 4px;
+  color:#f1f0f0;
+  resize: none
+}
+
+.modal-add button{
+  display: inline;
+  color: #398598;
+  position: center;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*----------------------Модальное окно--------------------*/
+.footer-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+.footer-buttons button {
+  text-align: center;
+  font-size: 18px;
+  background-color: #1797b1;
+  border: 8px solid #1797b1;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.footer-buttons button:hover {
+  opacity: 1;
+}
+
+.footer-buttons .delete_item {
+  background-color: rgb(132, 15, 15);
+  border: rgb(132, 15, 15) ;
+  margin-left: auto;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #164558;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.322);
+}
+
+.modal h3 {
+  color: #a5b6c7;
+  margin-top: 0;
+}
+
+.modal p {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #932121;
+  color: white;
+}
+
+.cancel-btn {
+  background: #398598;
+  color: white;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modal-actions button:hover {
+  filter: brightness(1.1);
+}
+
+/*----------------------Добавление чего-либо в отдельном окне--------------------*/
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #205a911e;
+  border: 1px solid  #ffffff7b;
+  border-radius: 8px 8px 8px 8px;
+  
+}
+
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.form-table th {
+  text-align: left;
+  padding: 8px;
+  width: 30%;
+}
+
+.form-table td {
+  padding: 8px;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 8px;
+  background-color: rgba(34, 33, 33, 0.452);
+  border: 2px solid rgba(185, 176, 176, 0.642);
+  border-radius: 4px;
+  color:#f1f0f0
+}
+
+.form-textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
