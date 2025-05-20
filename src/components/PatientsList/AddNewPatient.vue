@@ -33,7 +33,7 @@ export default {
       this.cancel_item()
     },
     cancel_item() {
-      this.$router.push(/pointdetails/);
+      this.$router.push("/patientslist/");
     },
   },
 };

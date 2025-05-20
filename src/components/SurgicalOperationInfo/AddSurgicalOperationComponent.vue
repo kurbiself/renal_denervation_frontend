@@ -1,7 +1,7 @@
 <template>
   <div>
-    <form class="form-container" id="AddForm" @submit.prevent>
-      <table>
+    <form class="form-operation" id="AddForm" @submit.prevent>
+      <table class="operation-table">
         <tbody>
           <tr>
             <th>Название</th>
@@ -22,7 +22,6 @@
                 <option value="Операция">Операция</option>
                 <option value="Повторная операция">Повторная операция</option>
               </select>
-              {{ type_stage_new }}
             </th>
           </tr>
           <tr>
@@ -31,7 +30,6 @@
               <select v-model="catheter_new">
                 <catheter />
               </select>
-              {{ catheter_new }}
             </th>
           </tr>
           <tr>
@@ -166,3 +164,15 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.form-operation {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  border-radius: 8px 8px 8px 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.322);
+}
+</style>

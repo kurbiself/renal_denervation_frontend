@@ -1,7 +1,7 @@
 <template>
   <div>
     <form class="form-container" id="AddForm">
-      <table>
+      <table class="form-table">
         <tbody>
           <tr>
             <th>Тип</th>

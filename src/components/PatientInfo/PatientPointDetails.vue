@@ -98,7 +98,9 @@
       </div>
     </div>
   </div>
-  <button @click="goBack">Назад</button>
+  <div class="footer-buttons">
+    <button @click="goBack">Назад</button>
+  </div>
 </template>
 
 <script>
@@ -340,7 +342,6 @@ export default {
         number_of_ablation_points_new,
         note_new
       );
-      this.getData();
       this.refresh();
     },
     delete_treatment_drug(id) {
@@ -407,7 +408,6 @@ export default {
   margin: 2px;
   border-radius: 8px 8px 8px 8px;
   padding: 10px;
-  background-color: #67cee71f;
 }
 .point-info {
   flex: 1;

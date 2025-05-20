@@ -47,10 +47,10 @@ export default {
         );
         this.research_id = response.data.id;
         console.log("research_id", this.research_id);
-        return true; 
+        return true;
       } catch (error) {
         console.log(error);
-        return false; 
+        return false;
       }
     },
     async getData(research_template_id) {
@@ -61,10 +61,10 @@ export default {
         );
         this.metrics_templates = response.data;
         console.log("metrics-templates:", this.metrics_templates);
-        return true; 
+        return true;
       } catch (error) {
         console.log(error);
-        return false; 
+        return false;
       }
     },
     async addMetricId(metric_id) {
@@ -90,13 +90,13 @@ export default {
     //   this.next_add = true;
     // },
     async add_metrics_values_null() {
-       if (!this.metrics_templates || this.metrics_templates.length === 0) {
+      if (!this.metrics_templates || this.metrics_templates.length === 0) {
         console.warn("Нет метрик для добавления");
         return;
       }
 
       const results = await Promise.all(
-        this.metrics_templates.map(template =>
+        this.metrics_templates.map((template) =>
           this.addMetricId(template.metric_id)
         )
       );
@@ -108,18 +108,20 @@ export default {
         // 1. Сначала добавляем исследование
         await this.addData(research_template_id, this.point_id, date, note);
         if (!this.research_id) {
-          throw new Error("Не удалось добавить исследование (research_id не установлен)");
+          throw new Error(
+            "Не удалось добавить исследование (research_id не установлен)"
+          );
         }
-        
+
         // 2. Затем загружаем метрики
-       await this.getData(research_template_id);
+        await this.getData(research_template_id);
         if (!this.metrics_templates || this.metrics_templates.length === 0) {
           throw new Error("Нет метрик для добавления");
         }
-        
+
         // 3. Добавляем метрики
         await this.add_metrics_values_null();
-        
+
         // 4. Переходим к следующему шагу
         this.next_add = true;
       } catch (error) {
@@ -128,7 +130,9 @@ export default {
       }
     },
     cancel_item() {
-      this.$router.push(`/pointdetails/${this.point_id}`);
+      setTimeout(() => {
+        this.$router.push(`/pointdetails/${this.point_id}`);
+      }, 500);
     },
   },
 };

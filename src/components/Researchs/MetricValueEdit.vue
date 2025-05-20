@@ -44,6 +44,12 @@
               </select>
             </th>
           </tr>
+          <tr v-if="measurement_type === 'описательный'">
+            <th>Значение</th>
+            <th>
+              <textarea form="EditForm" v-model.lazy.trim="value_descriptive_new" />
+            </th>
+          </tr>
           <tr>
             <th>Примечание</th>
             <th>

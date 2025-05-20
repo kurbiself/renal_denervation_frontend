@@ -1,146 +1,155 @@
 <template>
   <div>
-    <div class="footer-buttons">
-      <button v-if="editMode" @click="toggleEditMode" class="edit-button">
-        Готово
-      </button>
-      <button v-if="editMode" @click="cancelEdit" class="edit-button">
-        Отмена
-      </button>
-      <button v-if="!editMode" @click="toggleEditMode" class="edit-button">
-        Редактировать
-      </button>
-      <button
-        type="button"
-        class="delete_item"
-        v-if="!editMode"
-        @click.self="showModal = true"
-      >
-        Удалить операцию
-      </button>
-    </div>
-    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="modal">
-        <h3>Подтверждение удаления</h3>
-        <p>Вы уверены, что хотите удалить {{ this.name }}?</p>
-        <div class="modal-actions">
-          <button
-            @click="delete_surgical_operation"
-            :disabled="loading"
-            class="delete-btn"
-          >
-            {{ loading ? "Удаление..." : "Да, удалить" }}
-          </button>
-          <button @click="closeModal" :disabled="loading" class="cancel-btn">
-            Отмена
-          </button>
+    <form class="form-operation" id="EditForm" @submit.prevent>
+      <div class="footer-buttons">
+        <button v-if="editMode" @click="toggleEditMode" class="edit-button">
+          Готово
+        </button>
+        <button v-if="editMode" @click="cancelEdit" class="edit-button">
+          Отмена
+        </button>
+        <button v-if="!editMode" @click="toggleEditMode" class="edit-button">
+          Редактировать
+        </button>
+        <button
+          type="button"
+          class="delete_item"
+          v-if="!editMode"
+          @click.self="showModal = true"
+        >
+          Удалить операцию
+        </button>
+      </div>
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal">
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить {{ this.name }}?</p>
+          <div class="modal-actions">
+            <button
+              @click="delete_surgical_operation"
+              :disabled="loading"
+              class="delete-btn"
+            >
+              {{ loading ? "Удаление..." : "Да, удалить" }}
+            </button>
+            <button @click="closeModal" :disabled="loading" class="cancel-btn">
+              Отмена
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <table>
-      <tbody>
-        <tr>
-          <th>Название</th>
-          <th>
-            <input v-model.lazy.trim="name_new" :disabled="!editMode" />
-          </th>
-        </tr>
-        <tr>
-          <th>Дата</th>
-          <th>
-            <input type="date" v-model="date_new" :disabled="!editMode" />
-          </th>
-        </tr>
-        <tr>
-          <th>Тип операции</th>
-          <th>
-            <select v-model="type_stage_new" :disabled="!editMode">
-              <option value="Операция">Операция</option>
-              <option value="Повторная операция">Повторная операция</option>
-            </select>
-          </th>
-        </tr>
-        <tr>
-          <th>Тип катетера</th>
-          <th>
-            <select v-model="catheter_new" :disabled="!editMode">
-              <catheter />
-            </select>
-          </th>
-        </tr>
-        <tr>
-          <th>Количество точек абляции</th>
-          <th>
-            <input
-              type="number"
-              v-model="number_of_ablation_points_new"
-              :disabled="!editMode"
-            />
-          </th>
-        </tr>
-        <tr>
-          <th>Места абляции</th>
-          <th>
-            <div v-if="editMode">
-              <div
-                v-for="site in ablation_sites_new"
-                :key="site.id"
-                class="ablation-edit"
-              >
-                <input
-                  v-model="site.name"
-                  placeholder="Название места абляции"
-                />
-                <button @click="markForRemoval(site.id)" class="remove-button">
-                  ×
-                </button>
-              </div>
-
-              <div
-                v-for="(site, index) in sites_name"
-                :key="'new-' + index"
-                class="ablation-edit"
-              >
-                <input v-model="sites_name[index]" placeholder="Название" />
-                <button @click="removeNewSite(index)" class="remove-button">
-                  ×
-                </button>
-              </div>
-
-              <div class="ablation-edit">
-                <input
-                  v-model="newAblationSite"
-                  placeholder="Введите новое место"
-                  @keyup.enter="add_ablation_site"
-                />
-                <button @click="add_ablation_site" class="add-button">
-                  Добавить
-                </button>
-              </div>
-            </div>
-            <div v-else>
-              <div v-if="hasAblationSites">
-                <span
-                  v-for="value in Object.values(ablation_sites_new)"
-                  :key="value.id"
-                  class="ablation-label"
+      <table class="operation-table">
+        <tbody>
+          <tr>
+            <th>Название</th>
+            <th>
+              <input v-model.lazy.trim="name_new" :disabled="!editMode" />
+            </th>
+          </tr>
+          <tr>
+            <th>Дата</th>
+            <th>
+              <input type="date" v-model="date_new" :disabled="!editMode" />
+            </th>
+          </tr>
+          <tr>
+            <th>Тип операции</th>
+            <th>
+              <select v-model="type_stage_new" :disabled="!editMode">
+                <option value="Операция">Операция</option>
+                <option value="Повторная операция">Повторная операция</option>
+              </select>
+            </th>
+          </tr>
+          <tr>
+            <th>Тип катетера</th>
+            <th>
+              <select v-model="catheter_new" :disabled="!editMode">
+                <catheter />
+              </select>
+            </th>
+          </tr>
+          <tr>
+            <th>Количество точек абляции</th>
+            <th>
+              <input
+                type="number"
+                v-model="number_of_ablation_points_new"
+                :disabled="!editMode"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>Места абляции</th>
+            <th>
+              <div v-if="editMode">
+                <div
+                  v-for="site in ablation_sites_new"
+                  :key="site.id"
+                  class="ablation-edit"
                 >
-                  {{ value.name }}
-                </span>
+                  <input
+                    v-model="site.name"
+                    placeholder="Название места абляции"
+                  />
+                  <button
+                    @click="markForRemoval(site.id)"
+                    class="remove-button"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div
+                  v-for="(site, index) in sites_name"
+                  :key="'new-' + index"
+                  class="ablation-edit"
+                >
+                  <input v-model="sites_name[index]" placeholder="Название" />
+                  <button @click="removeNewSite(index)" class="remove-button">
+                    ×
+                  </button>
+                </div>
+
+                <div class="ablation-edit">
+                  <input
+                    v-model="newAblationSite"
+                    placeholder="Введите новое место"
+                    @keyup.enter="add_ablation_site"
+                  />
+                  <button @click="add_ablation_site" class="add-button">
+                    Добавить
+                  </button>
+                </div>
               </div>
-              <div v-else>Нет данных о местах абляции</div>
-            </div>
-          </th>
-        </tr>
-        <tr>
-          <th>Примечание</th>
-          <th>
-            <textarea v-model.lazy.trim="note_new" :disabled="!editMode" />
-          </th>
-        </tr>
-      </tbody>
-    </table>
+              <div v-else>
+                <div v-if="hasAblationSites">
+                  <span
+                    v-for="value in Object.values(ablation_sites_new)"
+                    :key="value.id"
+                    class="ablation-label"
+                  >
+                    {{ value.name }}
+                  </span>
+                </div>
+                <div v-else>Нет данных о местах абляции</div>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th>Примечание</th>
+            <th>
+              <textarea
+                class="form-textarea"
+                v-model.lazy.trim="note_new"
+                :disabled="!editMode"
+              />
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   </div>
 </template>
 
@@ -293,7 +302,42 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.form-operation {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+.operation-table {
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+}
+
+.operation-table th {
+  text-align: left;
+  padding: 1px;
+}
+
+.form-operation input,
+.form-operation select,
+.form-operation textarea
+ {
+  padding: 8px;
+  background-color: #ffffff;
+  border: 2px solid #205a91;
+  border-radius: 4px;
+  color: #250b0b;
+  font-size: 16px;
+}
+
+.form-operation textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
 .edit-button {
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
@@ -308,7 +352,7 @@ input:disabled,
 select:disabled,
 textarea:disabled {
   background-color: #f0f0f0;
-  color: #555;
+  color: #212121;
   border-color: #ddd;
 }
 
@@ -337,9 +381,9 @@ textarea:disabled {
   background-color: #ff4444;
   color: white;
   border: none;
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
   cursor: pointer;
 }
 
@@ -347,6 +391,7 @@ textarea:disabled {
   margin-top: 0.5rem;
   padding: 0.25rem 0.5rem;
   background-color: #4caf50;
+  height: 35px;
   color: white;
   border: none;
   border-radius: 4px;

@@ -102,14 +102,16 @@ export default {
       this.cancel_item();
     },
     cancel_item() {
-      this.$router.push({
-        name: "aboutresearch",
-        params: { research_id: this.research_id },
-        query: {
-          id_point: this.$route.query.id_point,
-          research_name: this.$route.query.research_name,
-        },
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "aboutresearch",
+          params: { research_id: this.research_id },
+          query: {
+            id_point: this.$route.query.id_point,
+            research_name: this.$route.query.research_name,
+          },
+        });
+      }, 500);
     },
   },
   created() {

@@ -91,7 +91,11 @@ export default {
       await Promise.all(sites_name.map((site) => this.addAblationSite(site)));
     },
     cancel_item() {
-      this.$router.push(`/pointdetails/${this.point_id}`);
+     
+      setTimeout(() => {
+        this.$router.push(`/pointdetails/${this.point_id}`);
+      }, 500);
+      
     },
   },
 };

@@ -49,11 +49,12 @@ export default {
   display: none;
   position: absolute;
   top: 45px;
-  background-color: #2f769c8b;
+  background-color: #0097b3;
   min-width: 150px;
   z-index: 1;
-  border: 2px;
+ 
   border-radius: 20px;
+  box-shadow: 0 0px 10px #171b4890;;
 }
 
 /* Ссылки внутри выпадающего блока */
@@ -116,6 +117,6 @@ nav {
 }
 
 nav a.router-link-exact-active {
-  color: #ffffff;
+  color: #ff4444
 }
 </style>

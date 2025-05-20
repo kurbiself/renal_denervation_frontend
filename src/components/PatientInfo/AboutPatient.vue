@@ -313,7 +313,6 @@ export default {
 <style>
 .container {
   display: flex;
-  
 }
 
 .patient-info,
@@ -321,7 +320,6 @@ export default {
   margin: 2px;
   border-radius: 8px 8px 8px 8px;
   padding: 10px;
-  background-color: #67cee71f;
 }
 .patient-info {
   flex: 1;
@@ -336,7 +334,7 @@ export default {
   font-family: "Arial", sans-serif;
 
   h1 {
-    color: #a5b6c7;
+    color: #003333;
     text-align: center;
     margin-bottom: 30px;
     font-size: 28px;
@@ -356,13 +354,9 @@ export default {
     border-color: #29b4d0;
   }
   form {
-    background: #1645585d;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 10px #171b4890;
   }
-  
-
-  
 }
 </style>

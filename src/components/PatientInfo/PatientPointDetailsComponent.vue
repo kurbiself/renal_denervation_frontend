@@ -41,7 +41,6 @@
       @cancel_item="cancel_item"
     />
   </form>
-  
 </template>
 
 <script>
@@ -71,7 +70,7 @@ export default {
         return date;
       }
     },
-    
+
     onEdit() {
       this.edit_mode = true;
     },
@@ -92,3 +91,29 @@ export default {
   },
 };
 </script>
+
+<style>
+.delete,
+.update {
+  padding: 8px 16px;
+  font-size: 15px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+  
+}
+.delete {
+  background: #932121;
+  margin-left: 10px;
+}
+.update {
+  background: #1797b1;
+}
+.update:hover,
+.delete:hover {
+  filter: brightness(1.1);
+}
+</style>
