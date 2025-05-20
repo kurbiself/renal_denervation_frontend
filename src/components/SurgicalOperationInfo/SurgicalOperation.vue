@@ -339,8 +339,7 @@ export default {
 }
 
 .edit-button {
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
+  
   background-color: #196a7a;
   color: white;
   border: none;

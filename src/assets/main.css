@@ -1,5 +1,23 @@
 @import "./base.css";
 
+h1 {
+  text-align: center;
+  padding: 16px 20px;
+  color: #09343f;
+}
+h2 {
+  text-align: center;
+  color: #09343f;
+}
+.form-classic {
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0px 10px #171b4890;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .main_nav a {
   text-decoration: none;
   color: #205a91;
@@ -172,50 +190,85 @@ a:hover {
 /*------------Авторизация-----------*/
 .authorization_form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: auto;
+  align-items: center;
+  max-width: 300px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(56, 69, 74, 0);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.221);
+  border: 1px solid rgba(255, 255, 255, 0.078);
 }
+
 .authorization_form input {
+  width: 80%;
+  padding: 12px 20px;
   border: 2px solid #205a91;
-  border-radius: 5px;
-  height: 25px;
-  background-color: rgba(255, 255, 255, 0.111);
-  margin-top: 10px;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin: 12px 0;
+  font-size: 16px;
+  color: #01020f;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .authorization_form input:focus {
-  border: 3px solid #555;
+  border-color: #29b4d0;
+  box-shadow: 0 0 0 3px rgba(41, 180, 208, 0.3);
+  outline: none;
+  transform: translateY(-2px);
 }
+
+.authorization_form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .authorization_form label {
-  font-size: 20px;
-  padding: 18px;
-  margin-left: 100px;
-  margin-top: 10px;
-  color: #205a91;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #29b4d0;
+  margin: 10px 0 5px;
+  align-self: flex-start;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
 .auth_button {
   display: flex;
   justify-content: center;
+  width: 100%;
+  margin-top: 20px;
 }
+
 .auth_button button {
-  margin-top: 10px;
-  margin-left: 10px;
-  text-align: center;
-  font-size: 18px;
-  background-color: #1797b1;
-  border: 2px solid #1797b1;
-  border-radius: 100px;
-  color: #fff;
+  width: 100%;
+  max-width: 150px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1797b1, #29b4d0);
+  border: none;
+  border-radius: 50px;
+  color: white;
   cursor: pointer;
   height: 50px;
-  line-height: 48px;
-  outline: none;
-  padding: 0 30px 0 25px;
-  transition: all 0.3s;
+  padding: 0 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(23, 151, 177, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
+
 .auth_button button:hover {
-  background-color: #29b4d0;
-  border-color: #29b4d0;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(41, 180, 208, 0.4);
+  background: linear-gradient(135deg, #29b4d0, #3ac8e4);
+}
+
+.auth_button button:active {
+  transform: translateY(1px);
 }
 
 /*модалка добавления*/
@@ -354,12 +407,17 @@ a:hover {
   border-collapse: collapse;
   margin-bottom: 20px;
   margin-top: 20px;
-
 }
 
 .form-table th {
   text-align: left;
-  padding: 8px;
+  padding: 16px 20px;
+  font-size: 1.15rem;
+  color: #09343f;
+  text-shadow: 0 2px 8px rgba(58, 216, 255, 0.3);
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  border-radius: 12px;
 }
 
 .form-table td {

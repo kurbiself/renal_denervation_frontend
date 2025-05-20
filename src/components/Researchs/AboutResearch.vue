@@ -1,54 +1,60 @@
 <template>
-  <h1>Исследование {{ this.$route.query.research_name }}</h1>
-  <div>
-    <button @click="add_research_values" class="add-without-div">+</button>
-    <table class="strict-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Показатель</th>
-          <th>Сокращение</th>
-          <th>Значение</th>
-          <th>Референсное значение</th>
-          <th>Единица измерения</th>
-          <th>Примечание</th>
-        </tr>
-      </thead>
-      <tbody>
-        <about-research-component
-          v-for="item in items"
-          :id="item.id"
-          :metric_values="item"
-          @edit_metric_values="edit_metric_values"
-          @delete_metric_value="delete_metric_value"
-        />
-      </tbody>
-    </table>
-    <div class="footer-buttons">
-      <button @click="goBack">Вернуться к списку</button>
-      <button type="button" class="delete_item" @click.self="showModal = true">
-        Удалить
-      </button>
-    </div>
-    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="modal">
-        <h3>Подтверждение удаления</h3>
-        <p>Вы уверены, что хотите удалить исследование?</p>
-        <div class="modal-actions">
-          <button
-            @click="delete_research"
-            :disabled="loading"
-            class="delete-btn"
-          >
-            {{ loading ? "Удаление..." : "Да, удалить" }}
-          </button>
-          <button @click="closeModal" :disabled="loading" class="cancel-btn">
-            Отмена
-          </button>
+  <form class="form-classic" @submit.prevent>
+    <h1>Исследование {{ this.$route.query.research_name }}</h1>
+    <div>
+      <button @click="add_research_values" class="add-without-div">+</button>
+      <table class="strict-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Показатель</th>
+            <th>Сокращение</th>
+            <th>Значение</th>
+            <th>Референсное значение</th>
+            <th>Единица измерения</th>
+            <th>Примечание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <about-research-component
+            v-for="item in items"
+            :id="item.id"
+            :metric_values="item"
+            @edit_metric_values="edit_metric_values"
+            @delete_metric_value="delete_metric_value"
+          />
+        </tbody>
+      </table>
+      <div class="footer-buttons">
+        <button @click="goBack">Вернуться к списку</button>
+        <button
+          type="button"
+          class="delete_item"
+          @click.self="showModal = true"
+        >
+          Удалить
+        </button>
+      </div>
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal">
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить исследование?</p>
+          <div class="modal-actions">
+            <button
+              @click="delete_research"
+              :disabled="loading"
+              class="delete-btn"
+            >
+              {{ loading ? "Удаление..." : "Да, удалить" }}
+            </button>
+            <button @click="closeModal" :disabled="loading" class="cancel-btn">
+              Отмена
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -105,8 +111,7 @@ export default {
         this.showModal = false;
       } catch (error) {
         console.log(error);
-      }
-      finally {
+      } finally {
         this.loading = false;
         this.preventUpdates = false;
       }

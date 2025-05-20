@@ -1,4 +1,5 @@
 <template>
+  <form class="form-classic"  @submit.prevent>
   <div>
     <h1>Список исследований</h1>
     <div class="div-for-table-design">
@@ -25,6 +26,7 @@
       </table>
     </div>
   </div>
+  </form>
 </template>
 
 <script>

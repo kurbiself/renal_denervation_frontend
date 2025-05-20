@@ -1,40 +1,42 @@
 <template>
-  <div>
-    <h1>Список заболеваний</h1>
-    <div class="div-for-table-design">
-      <button class="add" @click="showAddDisease = true">+</button>
-      <div v-if="showAddDisease" class="modal-add">
-        <div class="modal-overlay">
-          <add-disease
-            @cancel="showAddDisease = false"
-            @add_diseases="add_diseases"
-          ></add-disease>
+  <form class="form-classic" @submit.prevent>
+    <div>
+      <h1>Список заболеваний</h1>
+      <div class="div-for-table-design">
+        <button class="add" @click="showAddDisease = true">+</button>
+        <div v-if="showAddDisease" class="modal-add">
+          <div class="modal-overlay">
+            <add-disease
+              @cancel="showAddDisease = false"
+              @add_diseases="add_diseases"
+            ></add-disease>
+          </div>
         </div>
+        <table class="table_design">
+          <thead>
+            <tr>
+              <th>Полное наименование</th>
+              <th>Краткое наименование</th>
+              <th>Код МКБ 10</th>
+              <th>Примечание</th>
+            </tr>
+          </thead>
+          <tbody>
+            <diseases-component
+              v-for="item in items"
+              :id="item.id"
+              :fullname="item.fullname"
+              :shortname="item.shortname"
+              :code_ICD_10="item.code_ICD_10"
+              :note="item.note"
+              @edit_diseases="edit_diseases"
+              @delete_diseases="delete_diseases"
+            />
+          </tbody>
+        </table>
       </div>
-      <table class="table_design">
-        <thead>
-          <tr>
-            <th>Полное наименование</th>
-            <th>Краткое наименование</th>
-            <th>Код МКБ 10</th>
-            <th>Примечание</th>
-          </tr>
-        </thead>
-        <tbody>
-          <diseases-component
-            v-for="item in items"
-            :id="item.id"
-            :fullname="item.fullname"
-            :shortname="item.shortname"
-            :code_ICD_10="item.code_ICD_10"
-            :note="item.note"
-            @edit_diseases="edit_diseases"
-            @delete_diseases="delete_diseases"
-          />
-        </tbody>
-      </table>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>

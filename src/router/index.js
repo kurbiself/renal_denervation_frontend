@@ -3,8 +3,6 @@ import Patients from "@/components/PatientsList/Patients.vue";
 import AddNewPatient from "@/components/PatientsList/AddNewPatient.vue";
 import AboutPatient from "@/components/PatientInfo/AboutPatient.vue";
 import LoginForm from "@/components/LoginForm.vue";
-import LogoutForm from "@/components/LogoutForm.vue";
-import Home from "@/components/Home.vue";
 import PatientPointDetails from "@/components/PatientInfo/PatientPointDetails.vue";
 import AddNewPoint from "@/components/PatientInfo/AddNewPoint.vue";
 import Diseases from "@/components/DiseaseInfo/Diseases.vue";
@@ -21,6 +19,7 @@ import AddTreatmentDrug from "@/components/TreatmentDrug/AddTreatmentDrug.vue";
 import Units from "@/components/Units/Units.vue";
 import ResearchList from "@/components/AllResearchs/ResearchList.vue";
 import AddSurgicalOperation from "@/components/SurgicalOperationInfo/AddSurgicalOperation.vue";
+import AboutProject from "@/components/AboutProject.vue";
 
 
 const router = createRouter({
@@ -28,18 +27,13 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home,
+      name: "about",
+      component: AboutProject,
     },
     {
       path: "/login",
       name: "login",
       component: LoginForm,
-    },
-    {
-      path: "/logout",
-      name: "logout",
-      component: LogoutForm,
     },
     {
       path: "/patientslist",

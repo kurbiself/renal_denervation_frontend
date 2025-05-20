@@ -1,106 +1,108 @@
 <template>
   <h1>Информация о выбранной контрольной точке</h1>
-  <div class="container-for-pointdetails">
-    <div class="top-row">
-      <div class="point-info">
-        <h2>Основное</h2>
-        <patient-point-details-component
-          :item="item"
-          @edit_item="edit_item"
-          @delete_item="delete_item"
-          @refresh="refresh"
-        />
-      </div>
-      <div class="operation-info">
-        <h2>Оперативное вмешательство</h2>
-        <div
-          class="div-for-table-design"
-          v-if="operations && operations?.length"
-        >
-          <surgical-operation
-            v-for="operation in operations"
-            :id="operation.id"
-            :check_point_id="operation.check_point_id"
-            :catheter="operation.catheter"
-            :name="operation.name"
-            :date="operation.date"
-            :type_stage="operation.type_stage"
-            :ablation_sites="operation.ablation_sites"
-            :number_of_ablation_points="operation.number_of_ablation_points"
-            :note="operation.note"
-            @edit_surgical_operation="edit_surgical_operation"
-            @delete_surgical_operation="delete_surgical_operation"
+  <form class="form-classic" @submit.prevent>
+    <div class="container-for-pointdetails">
+      <div class="top-row">
+        <div class="point-info">
+          <h2>Основное</h2>
+          <patient-point-details-component
+            :item="item"
+            @edit_item="edit_item"
+            @delete_item="delete_item"
+            @refresh="refresh"
           />
         </div>
-        <div class="div-for-table-design" v-else>
-          <button class="add" @click="add_surgical_operation">+</button>
-          <h3>Нет данных об операции</h3>
+        <div class="operation-info">
+          <h2>Оперативное вмешательство</h2>
+          <div
+            class="div-for-table-design"
+            v-if="operations && operations?.length"
+          >
+            <surgical-operation
+              v-for="operation in operations"
+              :id="operation.id"
+              :check_point_id="operation.check_point_id"
+              :catheter="operation.catheter"
+              :name="operation.name"
+              :date="operation.date"
+              :type_stage="operation.type_stage"
+              :ablation_sites="operation.ablation_sites"
+              :number_of_ablation_points="operation.number_of_ablation_points"
+              :note="operation.note"
+              @edit_surgical_operation="edit_surgical_operation"
+              @delete_surgical_operation="delete_surgical_operation"
+            />
+          </div>
+          <div class="div-for-table-design" v-else>
+            <button class="add" @click="add_surgical_operation">+</button>
+            <h3>Нет данных об операции</h3>
+          </div>
+        </div>
+      </div>
+      <div class="drug-therapy">
+        <h2>Фармакотерапия</h2>
+        <div class="div-for-table-design">
+          <button class="add" @click="add_treatment_drug">+</button>
+          <table class="table_design">
+            <thead>
+              <tr>
+                <th>Лекарственный препарат</th>
+                <th>Доза</th>
+                <th>Утро</th>
+                <th>День</th>
+                <th>Вечер</th>
+                <th>Ночь</th>
+                <th>Примечание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <treatment-drug
+                v-for="treatment in treatments_of_drugs"
+                :id="treatment.id"
+                :check_point_id="treatment.check_point_id"
+                :medicine="treatment.medicine"
+                :medicine_name="treatment.medicine_name"
+                :dose="treatment.dose"
+                :taking_medicine_morning="treatment.taking_medicine_morning"
+                :taking_medicine_day="treatment.taking_medicine_day"
+                :taking_medicine_evening="treatment.taking_medicine_evening"
+                :taking_medicine_night="treatment.taking_medicine_night"
+                :note="treatment.note"
+                @edit_treatment_drug_component="edit_treatment_drug_component"
+                @delete_treatment_drug="delete_treatment_drug"
+              />
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="research-info">
+        <h2>Исследование</h2>
+        <div class="div-for-table-design">
+          <button class="add" @click="addResearch">+</button>
+          <table class="table_design">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Дата</th>
+                <th>Примечание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <reserachs
+                v-for="research in researhs_list"
+                :research="research"
+                :id_point="id"
+              />
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    <div class="drug-therapy">
-      <h2>Фармакотерапия</h2>
-      <div class="div-for-table-design">
-        <button class="add" @click="add_treatment_drug">+</button>
-        <table class="table_design">
-          <thead>
-            <tr>
-              <th>Лекарственный препарат</th>
-              <th>Доза</th>
-              <th>Утро</th>
-              <th>День</th>
-              <th>Вечер</th>
-              <th>Ночь</th>
-              <th>Примечание</th>
-            </tr>
-          </thead>
-          <tbody>
-            <treatment-drug
-              v-for="treatment in treatments_of_drugs"
-              :id="treatment.id"
-              :check_point_id="treatment.check_point_id"
-              :medicine="treatment.medicine"
-              :medicine_name="treatment.medicine_name"
-              :dose="treatment.dose"
-              :taking_medicine_morning="treatment.taking_medicine_morning"
-              :taking_medicine_day="treatment.taking_medicine_day"
-              :taking_medicine_evening="treatment.taking_medicine_evening"
-              :taking_medicine_night="treatment.taking_medicine_night"
-              :note="treatment.note"
-              @edit_treatment_drug_component="edit_treatment_drug_component"
-              @delete_treatment_drug="delete_treatment_drug"
-            />
-          </tbody>
-        </table>
-      </div>
+    <div class="footer-buttons">
+      <button @click="goBack">Назад</button>
     </div>
-    <div class="research-info">
-      <h2>Исследование</h2>
-      <div class="div-for-table-design">
-        <button class="add" @click="addResearch">+</button>
-        <table class="table_design">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Название</th>
-              <th>Дата</th>
-              <th>Примечание</th>
-            </tr>
-          </thead>
-          <tbody>
-            <reserachs
-              v-for="research in researhs_list"
-              :research="research"
-              :id_point="id"
-            />
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="footer-buttons">
-    <button @click="goBack">Назад</button>
-  </div>
+  </form>
 </template>
 
 <script>

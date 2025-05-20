@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent class="form-classic">
     <h1>Об иссследовании: {{ items_research_template.name }}</h1>
     <button @click="add_metrics_template" class="add-without-div">+</button>
     <table class="strict-table">

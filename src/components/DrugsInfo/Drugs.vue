@@ -1,32 +1,34 @@
 <template>
-  <h1>Лекарственные вещества</h1>
-  <div class="div-for-table-design">
-    <button class="add" @click="add_drugs">+</button>
-    <table class="table_design">
-      <thead>
-        <tr>
-          <th>Торговое название</th>
-          <th>Международное непатентованное название</th>
-          <th>Активное вещество</th>
-          <th>Фармакологическая группа</th>
-        </tr>
-      </thead>
-      <tbody>
-        <drugs-component
-          v-for="item in items"
-          :id="item.id"
-          :trade_name="item.trade_name"
-          :international_name="item.international_name"
-          :active_ingredient="item.active_ingredient"
-          :active_ingredient_name="item.active_ingredient_name"
-          :pharmacological_group_id="item.pharmacological_group_id"
-          :pharmacological_group_name="item.pharmacological_group_name"
-          @edit_drugs="edit_drugs"
-          @delete_drugs="delete_drugs"
-        />
-      </tbody>
-    </table>
-  </div>
+  <form class="form-classic" @submit.prevent>
+    <h1>Лекарственные вещества</h1>
+    <div class="div-for-table-design">
+      <button class="add" @click="add_drugs">+</button>
+      <table class="table_design">
+        <thead>
+          <tr>
+            <th>Торговое название</th>
+            <th>Международное непатентованное название</th>
+            <th>Активное вещество</th>
+            <th>Фармакологическая группа</th>
+          </tr>
+        </thead>
+        <tbody>
+          <drugs-component
+            v-for="item in items"
+            :id="item.id"
+            :trade_name="item.trade_name"
+            :international_name="item.international_name"
+            :active_ingredient="item.active_ingredient"
+            :active_ingredient_name="item.active_ingredient_name"
+            :pharmacological_group_id="item.pharmacological_group_id"
+            :pharmacological_group_name="item.pharmacological_group_name"
+            @edit_drugs="edit_drugs"
+            @delete_drugs="delete_drugs"
+          />
+        </tbody>
+      </table>
+    </div>
+  </form>
 </template>
 
 <script>

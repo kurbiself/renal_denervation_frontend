@@ -1,45 +1,47 @@
 <template>
-  <div>
-    <h1>Список единиц измерения</h1>
-    <div class="div-for-table-design">
-      <button class="add" @click="showAddDisease = true">+</button>
-      <div v-if="showAddDisease" class="modal-add">
-        <div class="modal-overlay">
-          <add-units
-            @cancel="showAddDisease = false"
-            @add_units="add_units"
-          ></add-units>
+  <form class="form-classic" @submit.prevent>
+    <div>
+      <h1>Список единиц измерения</h1>
+      <div class="div-for-table-design">
+        <button class="add" @click="showAddDisease = true">+</button>
+        <div v-if="showAddDisease" class="modal-add">
+          <div class="modal-overlay">
+            <add-units
+              @cancel="showAddDisease = false"
+              @add_units="add_units"
+            ></add-units>
+          </div>
         </div>
+        <table class="table_design">
+          <thead>
+            <tr>
+              <th>Полное наименование</th>
+              <th>Краткое наименование</th>
+            </tr>
+          </thead>
+          <tbody>
+            <units-component
+              v-for="item in items"
+              :id="item.id"
+              :fullname="item.fullname"
+              :shortname="item.shortname"
+              @edit_units="edit_units"
+              @delete_units="delete_units"
+            />
+          </tbody>
+        </table>
       </div>
-      <table class="table_design">
-        <thead>
-          <tr>
-            <th>Полное наименование</th>
-            <th>Краткое наименование</th>
-          </tr>
-        </thead>
-        <tbody>
-          <units-component
-            v-for="item in items"
-            :id="item.id"
-            :fullname="item.fullname"
-            :shortname="item.shortname"
-            @edit_units="edit_units"
-            @delete_units="delete_units"
-          />
-        </tbody>
-      </table>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
-import UnitsComponent from './UnitsComponent.vue';
-import AddUnits from './AddUnits.vue';
+import UnitsComponent from "./UnitsComponent.vue";
+import AddUnits from "./AddUnits.vue";
 export default {
   components: {
     UnitsComponent,
-    AddUnits
+    AddUnits,
   },
   data() {
     return {

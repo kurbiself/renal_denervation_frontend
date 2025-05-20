@@ -1,4 +1,5 @@
 <template>
+  <form class="form-classic" @submit.prevent>
     <div>
       <h1>Шаблоны исследований</h1>
       <div class="div-for-table-design">
@@ -25,37 +26,37 @@
         </table>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import ResearchTemplatesComponent from './ResearchTemplatesComponent.vue';
-  export default {
-    components: {
-        ResearchTemplatesComponent,
+  </form>
+</template>
+
+<script>
+import ResearchTemplatesComponent from "./ResearchTemplatesComponent.vue";
+export default {
+  components: {
+    ResearchTemplatesComponent,
+  },
+  data() {
+    return {
+      items: [],
+    };
+  },
+  methods: {
+    async getData() {
+      try {
+        const response = await this.$http.get("research-templates/");
+        this.items = response.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    data() {
-      return {
-        items: [],
-      };
-    },
-    methods: {
-      async getData() {
-        try {
-          const response = await this.$http.get("research-templates/");
-          this.items = response.data;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      addResearch() {
+    addResearch() {
       this.$router.push({
-        name: "newresearchtemplate"
+        name: "newresearchtemplate",
       });
     },
-    },
-    created() {
-      this.getData();
-    },
-  };
-  </script>
-  
+  },
+  created() {
+    this.getData();
+  },
+};
+</script>
