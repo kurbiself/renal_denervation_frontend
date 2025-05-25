@@ -1,41 +1,45 @@
 <template>
-  <div>
-    <form id="AddForm" @submit.prevent>
-      <table>
-        <tbody>
-          <tr>
-            <th>Полное наименование</th>
-            <th>
-              <textarea v-model.lazy.trim="fullname_new" />
-            </th>
-          </tr>
-          <tr>
-            <th>Короткое наименование</th>
-            <th>
-              <textarea v-model.lazy.trim="shortname_new" />
-            </th>
-          </tr>
-          <tr>
-            <th>Код МКБ 10</th>
-            <th>
-              <textarea v-model.lazy.trim="code_ICD_10_new" />
-            </th>
-          </tr>
-          <tr>
-            <th>Примечание</th>
-            <th>
-              <textarea v-model.lazy.trim="note_new" />
-            </th>
-          </tr>
-        </tbody>
-      </table>
-    </form>
-    <button class="agree_button" type="button" title="Сохранить" @click="onSave">
-      ✔️
-    </button>
-    <button class="cancel_button" type="button" title="Отменить" @click="onCancel">
-      ❌
-    </button>
+  <div class="modal-overlay2" @click.self="onCancel">
+    <div class="modal-content2">
+      <form id="AddForm" @submit.prevent>
+        <table class="table-edit">
+          <tbody class="modal-body2">
+            <tr>
+              <th>Полное наименование</th>
+              <th>
+                <textarea v-model.lazy.trim="fullname_new" />
+              </th>
+            </tr>
+            <tr>
+              <th>Короткое наименование</th>
+              <th>
+                <textarea v-model.lazy.trim="shortname_new" />
+              </th>
+            </tr>
+            <tr>
+              <th>Код МКБ 10</th>
+              <th>
+                <textarea v-model.lazy.trim="code_ICD_10_new" />
+              </th>
+            </tr>
+            <tr>
+              <th>Примечание</th>
+              <th>
+                <textarea v-model.lazy.trim="note_new" />
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <div class="modal-buttons2">
+        <button class="agree_button" type="button" title="Сохранить" @click="onSave">
+          ✔️
+        </button>
+        <button class="cancel_button" type="button" title="Отменить" @click="onCancel">
+          ❌
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 

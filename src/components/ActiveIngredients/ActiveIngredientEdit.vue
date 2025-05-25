@@ -5,15 +5,19 @@
         <table class="table-edit">
           <tbody class="modal-body2">
             <tr>
-              <th>Полное наименование</th>
+              <th>Название</th>
               <th>
-                <textarea v-model.lazy.trim="fullname_new" />
+                <textarea v-model.lazy.trim="name_new" />
               </th>
             </tr>
             <tr>
-              <th>Короткое наименование</th>
+              <th>Активное вещество</th>
               <th>
-                <textarea v-model.lazy.trim="shortname_new" />
+                <select form="EditForm" v-model="pharmacological_group_id_new">
+                  <variants-pharm-groups
+                    :selected="pharmacological_group_id_new"
+                  />
+                </select>
               </th>
             </tr>
           </tbody>
@@ -42,28 +46,37 @@
 </template>
 
 <script>
+import VariantsPharmGroups from "./VariantsPharmGroups.vue";
 export default {
+  components: { VariantsPharmGroups },
   props: {
-    fullname: {
+    name: {
       type: String,
     },
-    shortname: {
-      type: String,
+    pharmacological_group_id: {
+      type: Number,
     },
   },
   data() {
     return {
-      fullname_new: this.fullname,
-      shortname_new: this.shortname,
+      name_new: this.name,
+      pharmacological_group_id_new: this.pharmacological_group_id,
     };
   },
   methods: {
     onSave() {
-      console.log("Данные перед отправкой в add (добавить заболевание):", {
-        fullname_new: this.fullname_new,
-        shortname_new: this.shortname_new,
-      });
-      this.$emit("edit_units_component", this.fullname_new, this.shortname_new);
+      console.log(
+        "Данные перед отправкой в edit (добавить активное вещество):",
+        {
+          name_new: this.name,
+          pharmacological_group_id_new: this.pharmacological_group_id,
+        }
+      );
+      this.$emit(
+        "edit_ingredient_component",
+        this.name_new,
+        this.pharmacological_group_id_new
+      );
     },
     onCancel() {
       this.$emit("cancel_item");

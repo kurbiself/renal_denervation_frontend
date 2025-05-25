@@ -30,10 +30,12 @@ export default {
     },
     add_item(code, gender, birth) {
       this.addData(code, gender, birth);
-      this.cancel_item()
+      this.cancel_item();
     },
     cancel_item() {
-      this.$router.push("/patientslist/");
+      setTimeout(() => {
+        this.$router.push("/patientslist/");
+      }, 500);
     },
   },
 };

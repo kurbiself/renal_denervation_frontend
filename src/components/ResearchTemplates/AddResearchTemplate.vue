@@ -50,9 +50,10 @@ export default {
       this.next_add = true;
     },
     cancel_item() {
-      this.$router.push("/researchtemplates/");
+      setTimeout(() => {
+        this.$router.push("/researchtemplates/");
+      }, 500);
     },
   },
 };
 </script>
-

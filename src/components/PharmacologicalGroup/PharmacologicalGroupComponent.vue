@@ -1,9 +1,6 @@
 <template>
   <tr v-if="!edit_mode">
-    <td>{{ fullname }}</td>
-    <td>{{ shortname }}</td>
-    <td>{{ code_ICD_10 }}</td>
-    <td>{{ note }}</td>
+    <td>{{ name }}</td>
     <td>
       <button
         type="button"
@@ -20,7 +17,10 @@
       <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
         <div class="modal">
           <h3>Подтверждение удаления</h3>
-          <p>Вы уверены, что хотите удалить лекарство?</p>
+          <p>
+            Вы уверены, что хотите удалить фармакологическую группу? Все
+            связанные с ней активные вещества и лекарства так же будут удалены!
+          </p>
           <div class="modal-actions">
             <button @click="onDelete" :disabled="loading" class="delete-btn">
               {{ loading ? "Удаление..." : "Да, удалить" }}
@@ -33,36 +33,24 @@
       </div>
     </td>
   </tr>
-  <edit-disease
+  <pharmacological-group-edit
     v-else
-    :fullname="this.fullname"
-    :shortname="this.shortname"
-    :code_ICD_10="this.code_ICD_10"
-    :note="this.note"
-    @edit_diseases_component="edit_diseases_component"
+    :name="this.name"
+    @edit_pharm_group_component="edit_pharm_group_component"
     @cancel_item="cancel_item"
   />
 </template>
 
 <script>
-import EditDisease from "./EditDisease.vue";
+import PharmacologicalGroupEdit from "./PharmacologicalGroupEdit.vue";
 export default {
-  components: { EditDisease },
+  components: { PharmacologicalGroupEdit },
   props: {
     id: {
-      type: String,
+      type: Number,
       required: true,
     },
-    fullname: {
-      type: String,
-    },
-    shortname: {
-      type: String,
-    },
-    code_ICD_10: {
-      type: String,
-    },
-    note: {
+    name: {
       type: String,
     },
   },
@@ -78,32 +66,23 @@ export default {
       this.edit_mode = true;
     },
     onDelete() {
-      this.$emit("delete_diseases", this.id);
       this.loading = true;
+      this.$emit("delete_pharm_group", this.id);
+      this.loading = false;
     },
     closeModal() {
       if (!this.loading) {
         this.showModal = false;
       }
     },
-    edit_diseases_component(fullname, shortname, code_ICD_10, note) {
+    edit_pharm_group_component(name_new) {
       console.log(
-        "Данные изменения заболевания перед отправкой в компоненте:",
+        "Данные изменения заболевания перед отправкой в компоненте PharmacologicalGroup:",
         {
-          fullname,
-          shortname,
-          code_ICD_10,
-          note,
+          name_new,
         }
       );
-      this.$emit(
-        "edit_diseases",
-        this.id,
-        fullname,
-        shortname,
-        code_ICD_10,
-        note
-      );
+      this.$emit("edit_pharm_group", this.id, name_new);
       this.edit_mode = false;
     },
     cancel_item() {
@@ -112,25 +91,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.update_button_design,
-.delete_button_design {
-  height: 30px;
-  width: 30px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  opacity: 0.5;
-  transition: 0.3s;
-  margin-left: 10px;
-  cursor: pointer;
-}
-.update_button_design:hover {
-  opacity: 1;
-}
-.delete_button_design:hover {
-  opacity: 1;
-}
-</style>

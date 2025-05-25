@@ -7,7 +7,9 @@
     v-else
     @supplement_item="supplement_item"
     @cancel_item="cancel_item"
+    @add_qualitative_values="add_qualitative_values"
     :measurement_type="this.metricData.measurement_type"
+    :metric_id="this.newMetrciId"
   />
 </template>
 
@@ -46,7 +48,7 @@ export default {
           headers: { authorization: `Bearer ${localStorage.access_token}` },
         });
         this.newMetrciId = response.data.id;
-        this.addMetricTemplate(this.newMetrciId)
+        await this.addMetricTemplate(this.newMetrciId);
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +57,10 @@ export default {
       try {
         await this.$http.post(
           "metrics-templates/",
-          { research_template_id: this.id, metric_id: metrciId },
+          {
+            research_template_id: this.id,
+            metric_id: metrciId,
+          },
           {
             headers: { authorization: `Bearer ${localStorage.access_token}` },
           }
@@ -64,6 +69,21 @@ export default {
         console.log(error);
       }
     },
+    async addVariantQualitative(value) {
+      try {
+        console.log('addVariantQualitative',this.metrciId, value.reference, value.value);
+        await this.$http.post(
+          "variants-qualitative/",
+          { metric_id: this.newMetrciId, value: value.value, reference: value.reference },
+          {
+            headers: { authorization: `Bearer ${localStorage.access_token}` },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     add_item({ fullname, shortname, measurement_type }) {
       console.log(
         "Данные перед отправкой в add:",
@@ -80,18 +100,26 @@ export default {
       console.log("Данные перед отправкой в add:", this.metricData);
       this.next_add = true;
     },
-    supplement_item(referenceData) {
+    async supplement_item(referenceData, qualitative_value) {
       this.metricData = {
         ...this.metricData,
         ...referenceData,
       };
       console.log("Данные перед отправкой в NewM:", this.metricData);
-      this.addData();
+      await this.addData();
       this.next_add = false;
+      await this.add_qualitative_values(qualitative_value);
       this.cancel_item();
     },
+    async add_qualitative_values(qualitative_value) {
+      await Promise.all(
+        qualitative_value.map((value) => this.addVariantQualitative(value))
+      );
+    },
     cancel_item() {
-      this.$router.push("/researchtemplates/" + this.id);
+      setTimeout(() => {
+        this.$router.push("/researchtemplates/" + this.id);
+      }, 500);
     },
   },
 };

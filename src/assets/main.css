@@ -1,5 +1,20 @@
 @import "./base.css";
 
+/* Стили только для radio-group */
+
+label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Для лучшего выравнивания текста и радио-кнопок */
+th label {
+  white-space: nowrap;
+}
+
 h1 {
   text-align: center;
   padding: 16px 20px;
@@ -157,6 +172,28 @@ a:hover {
     }
   }
 }
+
+/*--------------------Таблица редактирования---------------------*/
+.table-edit {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  tbody {
+    tr {
+      border-bottom: 1px solid #dddddd;
+
+      &:nth-child(even) {
+        background-color: #ffffff;
+      }
+
+      td {
+        padding: 12px 15px;
+      }
+    }
+  }
+}
+
 /*----------------------Кнопки сохранить и отменить----------------------------*/
 
 .agree_button,
@@ -280,7 +317,7 @@ a:hover {
   bottom: 0;
   max-width: 500px;
   margin: 0 auto;
-  background-color: #47bcea;
+  background-color: #ffffff;
   border-radius: 8px 8px 8px 8px;
   display: flex;
   padding: 25px;
@@ -306,7 +343,62 @@ a:hover {
   margin-left: 10px;
 }
 
-/*----------------------Модальное окно--------------------*/
+/*---------Модальное окно для редактирования------*/
+.modal-overlay2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content2 {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: auto;
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 90vh; /* Ограничиваем высоту окна */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto
+}
+
+.modal-body2 {
+  overflow-y: auto; /* Включаем скролл для содержимого */
+  max-height: calc(90vh - 120px); /* Вычитаем высоту заголовка и кнопок */
+  padding-right: 5px; /* Чтобы скроллбар не наезжал на контент */
+  margin: 10px 0;
+}
+
+.modal-buttons2 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto; /* Прижимаем кнопки к низу */
+  padding-top: 15px;
+  gap: 10px;
+}
+
+.modal-content2 textarea,
+.modal-content2 input,
+.modal-content2 select {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 2px solid #193f74;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/*----------------------Модальное окно для удаления--------------------*/
 .footer-buttons {
   display: flex;
   gap: 20px;
@@ -429,10 +521,10 @@ a:hover {
 .form-textarea {
   width: 80%;
   padding: 8px;
-  background-color: #1797b1ce;
+  background-color: #ffffff;
   border: 2px solid #205a91;
   border-radius: 4px;
-  color: #f1f0f0;
+  color: #121944;
 }
 
 .form-textarea {
@@ -445,4 +537,31 @@ a:hover {
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
+}
+
+
+/*------------------Валидация----------------*/
+
+.required-field {
+  color: red;
+  margin-left: 4px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: block;
+  margin-top: 5px;
+}
+
+.form-textarea:invalid, 
+.form-select:invalid,
+.form-input:invalid {
+  border-color: #ff9999;
+}
+
+.form-textarea:required, 
+.form-select:required,
+.form-input:required  {
+  border-left: 2px solid #ff9999;
 }

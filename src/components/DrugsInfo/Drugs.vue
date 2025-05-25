@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       items: [],
-      showAddDisease: false,
+      
     };
   },
   methods: {
@@ -94,15 +94,11 @@ export default {
       this.getData();
       this.refresh();
     },
-    add_drugs(trade_name, international_name, active_ingredient) {
+    add_drugs() {
       this.$router.push({
         name: "newdrug",
       });
-
-      this.addDrug(trade_name, international_name, active_ingredient);
-      this.showAddDisease = false;
-      this.getData();
-      this.refresh();
+       
     },
     refresh() {
       setTimeout(() => {

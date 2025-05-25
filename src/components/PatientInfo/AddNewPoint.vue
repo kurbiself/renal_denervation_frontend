@@ -1,6 +1,6 @@
 <template>
   <h1>Добавление новой контрольной точки</h1>
-  <add-new-point-component @add_item="add_item" @cancel_item="cancel_item"/>
+  <add-new-point-component @add_item="add_item" @cancel_item="cancel_item" />
 </template>
 
 <script>
@@ -60,8 +60,10 @@ export default {
         note
       );
     },
-    cancel_item(){
-      this.$router.push("/patientslist/"+this.patient_id);
+    cancel_item() {
+      setTimeout(() => {
+        this.$router.push("/patientslist/" + this.patient_id);
+      }, 500);
     },
   },
 };

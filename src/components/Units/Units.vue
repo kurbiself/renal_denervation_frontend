@@ -4,13 +4,11 @@
       <h1>Список единиц измерения</h1>
       <div class="div-for-table-design">
         <button class="add" @click="showAddDisease = true">+</button>
-        <div v-if="showAddDisease" class="modal-add">
-          <div class="modal-overlay">
-            <add-units
-              @cancel="showAddDisease = false"
-              @add_units="add_units"
-            ></add-units>
-          </div>
+        <div v-if="showAddDisease">
+          <add-units
+            @cancel="showAddDisease = false"
+            @add_units="add_units"
+          ></add-units>
         </div>
         <table class="table_design">
           <thead>

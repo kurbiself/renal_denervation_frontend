@@ -4,8 +4,8 @@
       <h1>Список заболеваний</h1>
       <div class="div-for-table-design">
         <button class="add" @click="showAddDisease = true">+</button>
-        <div v-if="showAddDisease" class="modal-add">
-          <div class="modal-overlay">
+        <div v-if="showAddDisease">
+          <div>
             <add-disease
               @cancel="showAddDisease = false"
               @add_diseases="add_diseases"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <form id="EditForm" @submit.prevent>
-      <table>
+      <table class="table-edit">
         <tbody>
           <tr>
             <th>Заболевание</th>

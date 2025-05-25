@@ -1,8 +1,9 @@
 <template>
   <option
     v-for="item in items"
+    :key="item.id"
     :value="item.id"
-    :selected="isSelected(item.id)"
+    :selected="selected_id === item.id"
   >
     {{ item.value }}
   </option>
@@ -11,35 +12,35 @@
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      required: true,
+    metric_id: {
+      type: Number,
+      required: true
     },
-    selected: {
-      type: Array,
-      default: null,
-    },
+    selected_id: {
+      type: Number,
+      default: null
+    }
   },
   data() {
     return {
-      items: [],
+      items: []
     };
   },
   methods: {
     async getData() {
       try {
-        const response = await this.$http.get(this.name + "/");
+        const response = await this.$http.get(
+          `variants-qualitative/?metric_id=${this.metric_id}`
+        );
         this.items = response.data;
       } catch (error) {
-        console.log(error);
+        console.error("Ошибка загрузки вариантов:", error);
+        this.items = [];
       }
-    },
-    isSelected(id) {
-        return this.selected.includes(id);
-    },
+    }
   },
   created() {
     this.getData();
-  },
+  }
 };
 </script>

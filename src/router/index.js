@@ -20,6 +20,8 @@ import Units from "@/components/Units/Units.vue";
 import ResearchList from "@/components/AllResearchs/ResearchList.vue";
 import AddSurgicalOperation from "@/components/SurgicalOperationInfo/AddSurgicalOperation.vue";
 import AboutProject from "@/components/AboutProject.vue";
+import ActiveIngredients from "@/components/ActiveIngredients/ActiveIngredients.vue";
+import PharmacologicalGroup from "@/components/PharmacologicalGroup/PharmacologicalGroup.vue";
 
 
 const router = createRouter({
@@ -139,6 +141,16 @@ const router = createRouter({
       name:"newsurgicaloperation",
       component: AddSurgicalOperation,
       props: true,
+    },
+    {
+      path: "/activeingredients",
+      name: "activeingredients",
+      component: ActiveIngredients,
+    },
+    {
+      path: "/pharmacologicalgroups",
+      name: "pharmacologicalgroups",
+      component: PharmacologicalGroup,
     },
 
   ],

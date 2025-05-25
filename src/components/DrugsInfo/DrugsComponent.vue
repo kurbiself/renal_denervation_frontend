@@ -15,8 +15,27 @@
       <button
         type="button"
         class="delete_button_design"
-        @click="onDelete"
+        @click.self="showModal = true"
       ></button>
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal">
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить лекарство?</p>
+          <div class="modal-actions">
+            <button @click="onDelete" :disabled="loading" class="delete-btn">
+              {{ loading ? "Удаление..." : "Да, удалить" }}
+            </button>
+            <button @click="closeModal" :disabled="loading" class="cancel-btn">
+              Отмена
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <button
+        type="button"
+        class="delete_button_design"
+        @click="onDelete"
+      ></button> -->
     </td>
   </tr>
   <edit-drugs
@@ -60,6 +79,8 @@ export default {
   data() {
     return {
       edit_mode: false,
+      showModal: false,
+      loading: false,
     };
   },
   methods: {
@@ -67,9 +88,13 @@ export default {
       this.edit_mode = true;
     },
     onDelete() {
-      if (confirm("Вы уверены, что хотите удалить эту запись?")) {
-        //будет всплывающее окно
-        this.$emit("delete_drugs", this.id);
+      this.loading = true;
+      this.$emit("delete_drugs", this.id);
+      this.loading = false;
+    },
+    closeModal() {
+      if (!this.loading) {
+        this.showModal = false;
       }
     },
     edit_drugs_component(
@@ -80,9 +105,10 @@ export default {
       console.log(
         "Данные изменения заболевания перед отправкой в компоненте Drugs:",
         {
-        trade_name_new,
-        international_name_new,
-        active_ingredient_new}
+          trade_name_new,
+          international_name_new,
+          active_ingredient_new,
+        }
       );
       this.$emit(
         "edit_drugs",

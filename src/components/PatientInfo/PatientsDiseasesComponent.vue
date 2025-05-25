@@ -1,17 +1,38 @@
 <template>
   <tr v-if="!edit_mode">
     <td>
-      {{ disease_name}}
+      {{ disease_name }}
     </td>
     <td>{{ year_start }}</td>
     <td>{{ type_disease }}</td>
     <td>{{ note }}</td>
-    <td>{{ id }}</td>
     <td>
-      <button type="button" class="update_button_design" @click="onEdit"></button>
+      <button
+        type="button"
+        class="update_button_design"
+        @click="onEdit"
+      ></button>
     </td>
     <td>
-      <button type="button" class="delete_button_design" @click="onDelete"></button>
+      <button
+        type="button"
+        class="delete_button_design"
+        @click.self="showModal = true"
+      ></button>
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal">
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить заболевание {{disease_name}}?</p>
+          <div class="modal-actions">
+            <button @click="onDelete" :disabled="loading" class="delete-btn">
+              {{ loading ? "Удаление..." : "Да, удалить" }}
+            </button>
+            <button @click="closeModal" :disabled="loading" class="cancel-btn">
+              Отмена
+            </button>
+          </div>
+        </div>
+      </div>
     </td>
   </tr>
 
@@ -36,7 +57,7 @@ export default {
     disease: {
       type: Number,
     },
-    disease_name:{
+    disease_name: {
       type: String,
     },
     year_start: {
@@ -52,17 +73,23 @@ export default {
   data() {
     return {
       edit_mode: false,
+      showModal: false,
+      loading: false,
     };
   },
   methods: {
+    closeModal() {
+      if (!this.loading) {
+        this.showModal = false;
+      }
+    },
     onEdit() {
       this.edit_mode = true;
     },
     onDelete() {
-      if (confirm("Вы уверены, что хотите удалить эту запись?")) {
-        //будет всплывающее окно
-        this.$emit("delete_diseases", this.id);
-      }
+      this.loading = true;
+      this.$emit("delete_diseases", this.id);
+      this.loading = false;
     },
     edit_diseases_component(disease, year_start, type_disease, note) {
       console.log(

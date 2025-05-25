@@ -150,4 +150,20 @@ button {
 .confirm-btn:hover {
   background: #e53935;
 }
+
+.door {
+  background-image: url("@/assets/exit.png");
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  transition: 0.3s;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.door:hover {
+  transform: translateX(+5px);
+}
 </style>

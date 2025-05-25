@@ -5,15 +5,9 @@
         <table class="table-edit">
           <tbody class="modal-body2">
             <tr>
-              <th>Полное наименование</th>
+              <th>Название</th>
               <th>
-                <textarea v-model.lazy.trim="fullname_new" />
-              </th>
-            </tr>
-            <tr>
-              <th>Короткое наименование</th>
-              <th>
-                <textarea v-model.lazy.trim="shortname_new" />
+                <textarea v-model.lazy.trim="name_new" />
               </th>
             </tr>
           </tbody>
@@ -44,26 +38,24 @@
 <script>
 export default {
   props: {
-    fullname: {
-      type: String,
-    },
-    shortname: {
+    name: {
       type: String,
     },
   },
   data() {
     return {
-      fullname_new: this.fullname,
-      shortname_new: this.shortname,
+      name_new: this.name,
     };
   },
   methods: {
     onSave() {
-      console.log("Данные перед отправкой в add (добавить заболевание):", {
-        fullname_new: this.fullname_new,
-        shortname_new: this.shortname_new,
-      });
-      this.$emit("edit_units_component", this.fullname_new, this.shortname_new);
+      console.log(
+        "Данные перед отправкой в edit (добавить активное вещество):",
+        {
+          name_new: this.name,
+        }
+      );
+      this.$emit("edit_pharm_group_component", this.name_new);
     },
     onCancel() {
       this.$emit("cancel_item");

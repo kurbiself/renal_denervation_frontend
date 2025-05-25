@@ -14,14 +14,16 @@
       {{ metric_data.reference_max_numerical }}
     </td>
     <td v-if="metric_data.measurement_type === 'качественный'">
-      {{ primaryQualitativeValue }}
+      <span v-for="value in variants_qualitative" :key="index">
+        {{ value.value }}
+        <br />
+        <br v-if="index < variants_qualitative.length - 1" />
+      </span>
     </td>
     <td v-else-if="metric_data.measurement_type === 'бинарный'">
       {{ metric_data.reference_binary === false ? "Патология" : "Норма" }}
     </td>
-    <td v-else-if="metric_data.measurement_type === 'описательный'">
-      -
-    </td>
+    <td v-else-if="metric_data.measurement_type === 'описательный'">-</td>
     <td>
       {{
         metric_data.unit_for_metric_shortname !== "None"
@@ -29,7 +31,15 @@
           : "-"
       }}
     </td>
-    <td>{{metric_data.note}}</td>
+    <td>{{ metric_data.note }}</td>
+    <td v-if="metric_data.measurement_type === 'качественный'">
+      <span v-for="value in all_variants_qualitative" :key="index">
+        {{ value.value }}
+        <br />
+        <br v-if="index < all_variants_qualitative.length - 1" />
+      </span>
+    </td>
+    <td v-else>-</td>
     <td>
       <button
         type="button"
@@ -41,12 +51,27 @@
       <button
         type="button"
         class="delete_button_design"
-        @click="onDelete"
+        @click.self="showModal = true"
       ></button>
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal">
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить лекарство?</p>
+          <div class="modal-actions">
+            <button @click="onDelete" :disabled="loading" class="delete-btn">
+              {{ loading ? "Удаление..." : "Да, удалить" }}
+            </button>
+            <button @click="closeModal" :disabled="loading" class="cancel-btn">
+              Отмена
+            </button>
+          </div>
+        </div>
+      </div>
     </td>
   </tr>
   <metrcis-edit
     v-else
+    :metric_id="this.metric_id"
     :fullname="this.metric_data.fullname"
     :shortname="this.metric_data.shortname"
     :measurement_type="this.metric_data.measurement_type"
@@ -54,6 +79,7 @@
     :reference_min_numerical="this.metric_data.reference_min_numerical"
     :reference_binary="this.metric_data.reference_binary"
     :unit_for_metric="this.metric_data.unit_for_metric"
+    :variants_qualitative="this.metric_data.variants_qualitative"
     :note="this.metric_data.note"
     @edit_metric_component="edit_metric_component"
     @cancel_item="cancel_item"
@@ -83,7 +109,10 @@ export default {
   data() {
     return {
       variants_qualitative: [],
+      all_variants_qualitative: [],
       edit_mode: false,
+      showModal: false,
+      loading: false,
     };
   },
   computed: {
@@ -96,9 +125,20 @@ export default {
       if (this.metric_data.measurement_type !== "качественный") return;
       try {
         const response = await this.$http.get(
-          `variants-qualitative/?metric_id=${this.id}&reference=True`
+          `variants-qualitative/?metric_id=${this.metric_id}&reference=True`
         );
         this.variants_qualitative = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getAllVariants() {
+      if (this.metric_data.measurement_type !== "качественный") return;
+      try {
+        const response = await this.$http.get(
+          `variants-qualitative/?metric_id=${this.metric_id}`
+        );
+        this.all_variants_qualitative = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -107,10 +147,9 @@ export default {
       this.edit_mode = true;
     },
     onDelete() {
-      if (confirm("Вы уверены, что хотите удалить эту запись?")) {
-        //будет всплывающее окно
-        this.$emit("delete_metric", this.metric_id);
-      }
+      this.loading = true;
+      this.showModal = false;
+      this.$emit("delete_metric", this.metric_id);
     },
     edit_metric_component(
       fullname_new,
@@ -137,9 +176,15 @@ export default {
     cancel_item() {
       this.edit_mode = false;
     },
+    closeModal() {
+      if (!this.loading) {
+        this.showModal = false;
+      }
+    },
   },
   created() {
     this.getVariants();
+    this.getAllVariants();
   },
 };
 </script>

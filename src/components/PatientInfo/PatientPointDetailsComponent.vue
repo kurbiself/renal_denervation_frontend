@@ -78,7 +78,7 @@ export default {
       if (confirm("Вы уверены, что хотите удалить эту запись?")) {
         //будет всплывающее окно
         this.$emit("delete_item");
-        this.goBack();
+        
       }
     },
     edit_item(date_of_receipt, date_of_discharge, type_point) {

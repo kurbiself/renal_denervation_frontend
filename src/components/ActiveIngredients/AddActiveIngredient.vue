@@ -12,30 +12,29 @@
                 <th>
                   <textarea
                     class="form-textarea"
-                    v-model.lazy.trim="fullname_new"
+                    v-model.lazy.trim="name_new"
                     required
                   />
-                  <span v-if="errors.fullname" class="error-message">{{
-                    errors.fullname
+                  <span v-if="errors.name" class="error-message">{{
+                    errors.name
                   }}</span>
                 </th>
               </tr>
               <tr>
-                <th>Короткое наименование</th>
                 <th>
-                  <textarea v-model.lazy.trim="shortname_new" />
+                  Фармакологическая группа<span class="required-field">*</span>
                 </th>
-              </tr>
-              <tr>
-                <th>Код МКБ 10</th>
                 <th>
-                  <textarea v-model.lazy.trim="code_ICD_10_new" />
-                </th>
-              </tr>
-              <tr>
-                <th>Примечание</th>
-                <th>
-                  <textarea v-model.lazy.trim="note_new" />
+                  <select v-model="pharmacological_group_id_new" required>
+                    <variants-pharm-groups
+                      :selected="pharmacological_group_id_new"
+                    />
+                  </select>
+                  <span
+                    v-if="errors.pharmacological_group"
+                    class="error-message"
+                    >{{ errors.pharmacological_group }}</span
+                  >
                 </th>
               </tr>
             </tbody>
@@ -65,32 +64,29 @@
 </template>
 
 <script>
+import VariantsPharmGroups from "./VariantsPharmGroups.vue";
 export default {
+  components: { VariantsPharmGroups },
   data() {
     return {
-      fullname_new: null,
-      shortname_new: null,
-      code_ICD_10_new: null,
-      note_new: null,
+      name_new: null,
+      pharmacological_group_id_new: null,
       errors: {
-        fullname: "",
+        name: "",
+        pharmacological_group: "",
       },
     };
   },
   methods: {
     onSave() {
       console.log("Данные перед отправкой в add (добавить заболевание):", {
-        fullname_new: this.fullname_new,
-        shortname_new: this.shortname_new,
-        code_ICD_10_new: this.code_ICD_10_new,
-        note_new: this.note_new,
+        name_new: this.name_new,
+        pharmacological_group_id_new: this.pharmacological_group_id_new,
       });
       this.$emit(
-        "add_diseases",
-        this.fullname_new,
-        this.shortname_new,
-        this.code_ICD_10_new,
-        this.note_new
+        "add_new_ingredient",
+        this.name_new,
+        this.pharmacological_group_id_new
       );
     },
     onCancel() {
@@ -100,11 +96,17 @@ export default {
       let isValid = true;
 
       this.errors = {
-        fullname: "",
+        name: "",
+        pharmacological_group: "",
       };
 
-      if (!this.fullname_new || this.fullname_new.trim() === "") {
-        this.errors.fullname = "Поле обязательно для заполнения";
+      if (!this.name_new || this.name_new.trim() === "") {
+        this.errors.name = "Поле обязательно для заполнения";
+        isValid = false;
+      }
+
+      if (!this.pharmacological_group_id_new) {
+        this.errors.pharmacological_group = "Поле обязательно для заполнения";
         isValid = false;
       }
 

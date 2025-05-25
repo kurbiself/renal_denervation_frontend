@@ -353,6 +353,7 @@ export default {
     },
     delete_item() {
       this.destroyData();
+      this.goBack();
     },
     delete_surgical_operation(id) {
       this.deleteSurgicalOperation(id);
@@ -376,7 +377,9 @@ export default {
       });
     },
     goBack() {
-      this.$router.push("/patientslist/" + this.item.patient);
+      setTimeout(() => {
+        this.$router.push("/patientslist/" + this.item.patient);
+      }, 500);
     },
     refresh() {
       setTimeout(() => {

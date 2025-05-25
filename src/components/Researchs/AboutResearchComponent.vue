@@ -13,9 +13,7 @@
         metric_values.metric_id_data.measurement_type === 'качественный'
       "
     >
-      <div v-for="variant in variants_qualitative" :key="variant.id">
-        {{ variant.value }}
-      </div>
+        {{ metric_values.value_qualitative_name }}
     </td>
     <td
       v-else-if="metric_values.metric_id_data.measurement_type === 'бинарный'"
@@ -41,7 +39,9 @@
         metric_values.metric_id_data.measurement_type === 'качественный'
       "
     >
-      {{ reference_for_qualitative }}
+     <div v-for="variant in reference_for_qualitative" :key="variant.id">
+        {{ variant.value }}
+      </div>
     </td>
     <td
       v-else-if="metric_values.metric_id_data.measurement_type === 'бинарный'"
@@ -51,7 +51,9 @@
       }}
     </td>
     <td
-      v-else-if="metric_values.metric_id_data.measurement_type === 'описательный'"
+      v-else-if="
+        metric_values.metric_id_data.measurement_type === 'описательный'
+      "
     >
       -
     </td>
@@ -83,6 +85,7 @@
   </tr>
   <metric-value-edit
     v-else
+    :metric_id="this.metric_values.metric_id"
     :value_numerical="this.metric_values.value_numerical"
     :value_qualitative_id="this.metric_values.value_qualitative_id"
     :value_binary="this.metric_values.value_binary"
@@ -117,29 +120,11 @@ export default {
   },
   methods: {
     async getVariantsMetric() {
-      if (
-        this.metric_values.metric_id_data.measurement_type !== "качественный" ||
-        !Array.isArray(this.metric_values.value_qualitative_id)
-      ) {
-        return;
-      }
-
-      this.variants_qualitative = [];
       try {
-        for (const id of this.metric_values.value_qualitative_id) {
-          try {
-            const response = await this.$http.get(
-              `variants-qualitative/${id}/`
-            );
-            this.variants_qualitative.push(response.data); //push - метод для добавления элемента
-          } catch (error) {
-            console.error(`Ошибка загрузки варианта ${id}:`, error);
-          }
-        }
         const reference = await this.$http.get(
           `variants-qualitative/?metric_id=${this.metric_values.metric_id}&reference=True`
         );
-        this.reference_for_qualitative = reference.data[0].value;
+        this.reference_for_qualitative = reference.data;
       } catch (error) {
         console.error("Общая ошибка:", error);
       }

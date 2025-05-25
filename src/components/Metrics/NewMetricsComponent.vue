@@ -91,7 +91,6 @@ export default {
         measurement_type: this.measurement_type_new,
       });
 
-      //this.$emit("cancel_item");
     },
     onCancel() {
       this.$emit("cancel_item");

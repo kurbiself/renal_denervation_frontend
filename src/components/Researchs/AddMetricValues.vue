@@ -49,18 +49,15 @@
             <th>Выберите признак(-и)</th>
             <th>
               <select
+                form="EditForm"
                 class="form-select"
                 v-model="value_qualitative_id_new"
-                multiple
-                @change="logSelection"
               >
-                <option
-                  v-for="variant in metric.variants_qualitative"
-                  :key="variant.id"
-                  :value="variant.id"
-                >
-                  {{ variant.value }}
-                </option>
+                <option :value="null" disabled>Выберите значение</option>
+                <variants-qualitative
+                  :metric_id="metric.id"
+                  :selected_id="value_qualitative_id_new"
+                />
               </select>
             </th>
           </tr>
@@ -124,22 +121,17 @@ export default {
         note: this.note_new,
       });
       const formData = {
-      value_numerical: this.value_numerical_new,
-      value_binary: this.value_binary_new,
-      value_descriptive: this.value_descriptive_new,
-      value_qualitative_id: this.value_qualitative_id_new, // Убедитесь, что это массив
-      note: this.note_new,
-    };
-      this.$emit("add_item_values", 
-        formData
-      );
+        value_numerical: this.value_numerical_new,
+        value_binary: this.value_binary_new,
+        value_descriptive: this.value_descriptive_new,
+        value_qualitative_id: this.value_qualitative_id_new, // Убедитесь, что это массив
+        note: this.note_new,
+      };
+      this.$emit("add_item_values", formData);
 
       //this.$emit("cancel_item");
     },
 
-    logSelection() {
-      console.log("Выбрано:", this.value_qualitative_id_new);
-    },
     onCancel() {
       this.$emit("cancel_item");
     },

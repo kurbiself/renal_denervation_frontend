@@ -1,54 +1,56 @@
 <template>
   <div>
-    <form id="EditForm" @submit.prevent>
-      <table>
-        <tbody>
-          <tr>
-            <th>Торговое название</th>
-            <th>
-              <textarea v-model.lazy.trim="trade_name_new" />
-            </th>
-          </tr>
-          <tr>
-            <th>Международное непатентованное название</th>
-            <th>
-              <textarea v-model.lazy.trim="international_name_new" />
-            </th>
-          </tr>
-          <tr>
-            <th>Активное вещество</th>
-            <th>
-              <select
-                form="EditForm"
-                class="form-select"
-                v-model="active_ingredient_new"
-              >
-                <variants-active-ingredient
-                  name="active-ingredients"
-                  :selected="active_ingredient_new"
-                />
-              </select>
-            </th>
-          </tr>
-        </tbody>
-      </table>
-    </form>
-    <button
-      class="agree_button"
-      type="button"
-      title="Сохранить"
-      @click="onSave"
-    >
-      ✔️
-    </button>
-    <button
-      class="cancel_button"
-      type="button"
-      title="Отменить"
-      @click="onCancel"
-    >
-      ❌
-    </button>
+    <div class="modal-overlay2" @click.self="onCancel">
+      <div class="modal-content2">
+        <form id="EditForm" @submit.prevent>
+          <table class="table-edit">
+            <tbody class="modal-body2">
+              <tr>
+                <th>Торговое название</th>
+                <th>
+                  <textarea v-model.lazy.trim="trade_name_new" />
+                </th>
+              </tr>
+              <tr>
+                <th>Международное непатентованное название</th>
+                <th>
+                  <textarea v-model.lazy.trim="international_name_new" />
+                </th>
+              </tr>
+              <tr>
+                <th>Активное вещество</th>
+                <th>
+                  <select form="EditForm" v-model="active_ingredient_new">
+                    <variants-active-ingredient
+                      name="active-ingredients"
+                      :selected="active_ingredient_new"
+                    />
+                  </select>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <div class="modal-buttons2">
+          <button
+            class="agree_button"
+            type="button"
+            title="Сохранить"
+            @click="onSave"
+          >
+            ✔️
+          </button>
+          <button
+            class="cancel_button"
+            type="button"
+            title="Отменить"
+            @click="onCancel"
+          >
+            ❌
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

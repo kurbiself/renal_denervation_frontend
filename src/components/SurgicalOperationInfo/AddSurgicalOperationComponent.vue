@@ -16,7 +16,7 @@
             </th>
           </tr>
           <tr>
-            <th>Тип операции</th>
+            <th>Тип</th>
             <th>
               <select v-model="type_stage_new">
                 <option value="Операция">Операция</option>
